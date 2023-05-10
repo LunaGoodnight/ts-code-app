@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-
+import { format } from "date-fns";
 function App() {
   const dates = [
     "2023-04-10",
@@ -39,8 +39,29 @@ function App() {
     }
     return groups;
   };
+  const addOneDayToArray = (arr: string[][]) => {
+    return arr.reduce((a: string[][], c: string[]) => {
+      const currentArr = c.slice();
 
-  const res = groupConsecutiveDates(dates);
+      const lastDate = currentArr[currentArr.length - 1];
+      const nextDate = new Date(
+        new Date(lastDate).getTime() + 24 * 60 * 60 * 1000
+      );
+      const nextDateString = format(
+        new Date(
+          new Date(nextDate).getFullYear(),
+          new Date(nextDate).getMonth(),
+          new Date(nextDate).getDate()
+        ),
+        "yyyy-MM-dd"
+      );
+      currentArr.push(nextDateString);
+      return a.concat([currentArr]);
+    }, []);
+  };
+
+  const grouped = groupConsecutiveDates(dates);
+  const addOneDate = addOneDayToArray(grouped);
   debugger;
   return (
     <div className="App">

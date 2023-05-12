@@ -1,6 +1,7 @@
 export const checkShouldMerge = (arr: string[][]) => {
   for (let i = 0; i < arr.length; i++) {
     const currentSubarray = arr[i];
+    if (i + 1 >= arr.length) continue;
     const nextSubarray = arr[i + 1];
     const currentLastElement = new Date(
       currentSubarray[currentSubarray.length - 1]
@@ -21,6 +22,7 @@ export const mergeTimeRange = (arr: string[][]) => {
   const skippedIndex: number[] = [];
   for (let i = 0; i < arr.length; i++) {
     const currentSubarray = arr[i];
+    if (i + 1 >= arr.length) continue;
     const nextSubarray = arr[i + 1];
 
     const currentLastElement = new Date(

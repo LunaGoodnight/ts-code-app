@@ -5,7 +5,8 @@ import "./App.css";
 import { addOneDayToArray } from "./utils/addOneDayToArray";
 import { groupConsecutiveDates } from "./utils/groupConsecutiveDates";
 import { keepFirstAndLast } from "./utils/keepFirstAndLast";
-import { mergeTimeRangeArrays } from "./utils/mergeTimeRange";
+import { checkShouldMerge, mergeTimeRange } from "./utils/mergeTimeRange";
+
 function App() {
   const dates = [
     "2023-04-10",
@@ -23,7 +24,11 @@ function App() {
   const grouped = groupConsecutiveDates(dates);
   const addOneDate = addOneDayToArray(grouped);
 
-  const preciseTimeRange = keepFirstAndLast(mergeTimeRangeArrays(addOneDate));
+  while (checkShouldMerge(addOneDate)) {
+    mergeTimeRange(addOneDate);
+  }
+
+  const preciseTimeRange = keepFirstAndLast(addOneDate);
 
   debugger;
   return (
